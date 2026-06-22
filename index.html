@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auditoría Profunda de Aulas Virtuales</title>
+    <title>Motor de Auditoría DigCompEdu - Aulas Virtuales</title>
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #2980b9;
-            --accent-color: #e74c3c;
-            --bg-color: #ecf0f1;
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #e53e3e;
+            --bg-color: #f7fafc;
             --card-bg: #ffffff;
-            --text-color: #34495e;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
         }
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -19,308 +20,311 @@
             color: var(--text-color);
             margin: 0;
             padding: 20px;
+            line-height: 1.6;
         }
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             background: var(--card-bg);
             padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
         h1 {
             color: var(--primary-color);
             text-align: center;
-            border-bottom: 2px solid var(--secondary-color);
-            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
         }
         .header-info {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
-            background: #f8f9fa;
-            padding: 20px;
+            background: #edf2f7;
+            padding: 25px;
             border-radius: 8px;
-            border-left: 5px solid var(--secondary-color);
+            border-left: 6px solid var(--secondary-color);
         }
         .form-group {
             display: flex;
             flex-direction: column;
         }
         .form-group label {
-            font-weight: bold;
+            font-weight: 600;
             margin-bottom: 8px;
             color: var(--primary-color);
+            font-size: 0.95em;
         }
-        select, input[type="text"] {
+        select, input[type="text"], input[type="date"] {
             padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
             font-size: 1em;
+            background-color: #fff;
+        }
+        .telemetry-toggle {
+            background-color: #e6fffa;
+            border: 1px solid #319795;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .telemetry-toggle input {
+            margin-right: 15px;
+            transform: scale(1.5);
         }
         .section-title {
             background-color: var(--primary-color);
             color: white;
             padding: 12px 20px;
-            border-radius: 4px;
+            border-radius: 6px;
             margin-top: 40px;
             margin-bottom: 20px;
-            font-size: 1.2em;
+            font-size: 1.1em;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            background-color: #fff;
         }
         th, td {
-            border: 1px solid #bdc3c7;
-            padding: 12px;
+            border: 1px solid var(--border-color);
+            padding: 15px;
             text-align: left;
+            vertical-align: middle;
         }
         th {
-            background-color: #ecf0f1;
+            background-color: #f8fafc;
             color: var(--primary-color);
+            font-weight: 600;
         }
         .td-options {
-            text-align: center;
-            min-width: 200px;
+            min-width: 320px;
         }
         .radio-group {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
+            gap: 10px;
         }
         .radio-group label {
             cursor: pointer;
-            font-size: 0.9em;
+            font-size: 0.85em;
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-align: center;
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .radio-group label:hover {
+            background-color: #edf2f7;
+        }
+        .radio-group input[type="radio"] {
+            margin-bottom: 8px;
+            transform: scale(1.2);
         }
         .actions {
             text-align: center;
-            margin-top: 40px;
+            margin-top: 50px;
         }
         button {
             background-color: var(--secondary-color);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 15px 35px;
             font-size: 1.1em;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 600;
             transition: background 0.3s;
             margin: 0 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         button:hover {
-            background-color: #1f618d;
+            background-color: #1e4e8c;
         }
         .btn-print {
-            background-color: #7f8c8d;
+            background-color: #718096;
         }
         .btn-print:hover {
-            background-color: #616a6b;
+            background-color: #4a5568;
         }
         .results-card {
-            margin-top: 30px;
-            padding: 20px;
-            border-radius: 8px;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 10px;
             display: none;
-            font-size: 1.2em;
-            text-align: center;
+            font-size: 1.1em;
+            line-height: 1.8;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        .score-high { background-color: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
-        .score-mid { background-color: #fff3cd; color: #856404; border: 2px solid #ffeeba; }
-        .score-low { background-color: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
+        .score-high { background-color: #f0fff4; color: #22543d; border: 2px solid #9ae6b4; }
+        .score-mid { background-color: #fffff0; color: #744210; border: 2px solid #faf089; }
+        .score-low { background-color: #fff5f5; color: #742a2a; border: 2px solid #feb2b2; }
 
         @media print {
             .actions { display: none; }
             body { background-color: white; padding: 0; }
-            .container { box-shadow: none; border: none; }
+            .container { box-shadow: none; border: none; padding: 0; }
+            .telemetry-toggle { border: 1px solid #000; background: transparent; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Auditoría Integral de Aulas Virtuales</h1>
+    <h1>Motor de Auditoría DigCompEdu (Aulas Virtuales)</h1>
     
     <form id="auditForm">
-        <!-- SECCIÓN DE CONTEXTO ACADÉMICO -->
         <div class="header-info">
             <div class="form-group">
-                <label for="evaluador">Nombre del Evaluador/a:</label>
-                <input type="text" id="evaluador" placeholder="Ej. Juan Pérez" required>
+                <label for="evaluador">Auditor/a / Equipo Docente:</label>
+                <input type="text" id="evaluador" placeholder="Nombre completo" required>
             </div>
             <div class="form-group">
-                <label for="fecha">Fecha de Evaluación:</label>
+                <label for="fecha">Fecha de Auditoría:</label>
                 <input type="date" id="fecha" required>
             </div>
             <div class="form-group">
-                <label for="carrera">Carrera:</label>
+                <label for="carrera">Unidad Académica / Carrera:</label>
                 <select id="carrera" onchange="cargarMaterias()" required>
-                    <option value="">-- Seleccione una Carrera --</option>
-                    <option value="abogacia">Abogacía</option>
-                    <option value="tecnicatura">Tecnicatura Univ. en Administración de Edificios (PH y CI)</option>
+                    <option value="">-- Seleccione una Opción --</option>
+                    <option value="abogacia">Carrera de Abogacía</option>
+                    <option value="tecnicatura">Tecnicatura Univ. en Adm. de Edificios</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="materia">Espacio Curricular (Materia):</label>
+                <label for="materia">Entorno Virtual (Asignatura):</label>
                 <select id="materia" required>
                     <option value="">-- Seleccione primero la Carrera --</option>
                 </select>
             </div>
         </div>
 
-        <!-- DIMENSIÓN INFORMATIVA Y ESTRUCTURAL -->
-        <div class="section-title">I. Dimensión Informativa y Bloque Inicial</div>
+        <div class="telemetry-toggle">
+            <input type="checkbox" id="telemetria" name="telemetria">
+            <label for="telemetria"><strong>Validación por Telemetría LMS:</strong> Confirmo que las respuestas han sido trianguladas con la configuración técnica, reportes de actividad y logs del entorno virtual (Moodle/Canvas).</label>
+        </div>
+
+        <div class="section-title">
+            <span>I. Organización y Compromiso Comunicativo</span>
+            <span>Área 1 DigCompEdu</span>
+        </div>
         <table>
             <tr>
-                <th>Criterio a Evaluar</th>
-                <th>Valoración (0 = No, 1 = Parcial, 2 = Sí)</th>
+                <th>Indicadores Técnicos de Cumplimiento (LMS)</th>
+                <th>Desempeño Observado (Niveles A, B, C)</th>
             </tr>
             <tr>
-                <td>1. ¿El "bloque inicial" presenta la propuesta pedagógica, expectativas de logro y el cronograma de trabajo explícitamente?</td>
+                <td>Configuración de canales de comunicación y políticas de privacidad digital.</td>
                 <td class="td-options">
                     <div class="radio-group">
-                        <label><input type="radio" name="q1" value="0" required> 0</label>
-                        <label><input type="radio" name="q1" value="1"> 1</label>
-                        <label><input type="radio" name="q1" value="2"> 2</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>2. ¿La navegación es intuitiva (uso de mosaicos, bloques o semanas) y evita la sobrecarga visual?</td>
-                <td class="td-options">
-                    <div class="radio-group">
-                        <label><input type="radio" name="q2" value="0" required> 0</label>
-                        <label><input type="radio" name="q2" value="1"> 1</label>
-                        <label><input type="radio" name="q2" value="2"> 2</label>
+                        <label><input type="radio" name="q1" value="0" required> <strong>0 - Inicial (A1/A2)</strong><br>Canal unidireccional; sin estructura lógica.</label>
+                        <label><input type="radio" name="q1" value="1"> <strong>1 - Intermedio (B1/B2)</strong><br>Foros bidireccionales activos; estructura modular.</label>
+                        <label><input type="radio" name="q1" value="2"> <strong>2 - Avanzado (C1/C2)</strong><br>Canales adaptativos; diseño personalizado y protocolos de bienestar.</label>
                     </div>
                 </td>
             </tr>
         </table>
 
-        <!-- DIMENSIÓN PRÁXICA Y DIDÁCTICA -->
-        <div class="section-title">II. Dimensión Práxica y Diseño de Actividades</div>
+        <div class="section-title">
+            <span>II. Diseño de Contenidos y Recursos Abiertos (REA)</span>
+            <span>Áreas 2 y 7 DigCompEdu</span>
+        </div>
         <table>
             <tr>
-                <th>Criterio a Evaluar</th>
-                <th>Valoración (0 = No, 1 = Parcial, 2 = Sí)</th>
+                <th>Indicadores Técnicos de Cumplimiento (LMS)</th>
+                <th>Desempeño Observado (Niveles A, B, C)</th>
             </tr>
             <tr>
-                <td>3. ¿El aula supera el modelo de "repositorio" incorporando actividades de aprendizaje activo (resolución de problemas, colaborativas, etc.)?</td>
+                <td>Integración, adaptación y licenciamiento de materiales educativos digitales.</td>
                 <td class="td-options">
                     <div class="radio-group">
-                        <label><input type="radio" name="q3" value="0" required> 0</label>
-                        <label><input type="radio" name="q3" value="1"> 1</label>
-                        <label><input type="radio" name="q3" value="2"> 2</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>4. ¿Las consignas detallan con claridad: objetivos, recursos necesarios, metodología de resolución y plazos de entrega?</td>
-                <td class="td-options">
-                    <div class="radio-group">
-                        <label><input type="radio" name="q4" value="0" required> 0</label>
-                        <label><input type="radio" name="q4" value="1"> 1</label>
-                        <label><input type="radio" name="q4" value="2"> 2</label>
+                        <label><input type="radio" name="q2" value="0" required> <strong>0 - Inicial (A1/A2)</strong><br>PDFs estáticos sin derechos explícitos.</label>
+                        <label><input type="radio" name="q2" value="1"> <strong>1 - Intermedio (B1/B2)</strong><br>Recursos de autoría propia editados; REA con licencia CC.</label>
+                        <label><input type="radio" name="q2" value="2"> <strong>2 - Avanzado (C1/C2)</strong><br>Secuencias multimodales; difusión de REA en repositorios globales.</label>
                     </div>
                 </td>
             </tr>
         </table>
 
-        <!-- DIMENSIÓN COMUNICATIVA Y TUTORÍA -->
-        <div class="section-title">III. Dimensión Comunicativa y Mediación Tutorial</div>
+        <div class="section-title">
+            <span>III. Mediación Pedagógica e Integración de IA</span>
+            <span>Área 3 + Suplemento AI Pioneers</span>
+        </div>
         <table>
             <tr>
-                <th>Criterio a Evaluar</th>
-                <th>Valoración (0 = No, 1 = Parcial, 2 = Sí)</th>
+                <th>Indicadores Técnicos de Cumplimiento (LMS)</th>
+                <th>Desempeño Observado (Niveles A, B, C)</th>
             </tr>
             <tr>
-                <td>5. ¿Están habilitados y activos los Foros (Avisos, Consultas, Café virtual) y la mensajería interna?</td>
+                <td>Metodologías activas, aprendizaje colaborativo y uso ético de IA Generativa.</td>
                 <td class="td-options">
                     <div class="radio-group">
-                        <label><input type="radio" name="q5" value="0" required> 0</label>
-                        <label><input type="radio" name="q5" value="1"> 1</label>
-                        <label><input type="radio" name="q5" value="2"> 2</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>6. ¿Se evidencia una presencia virtual constante del docente/tutor (respuestas en tiempo y forma, moderación de debates)?</td>
-                <td class="td-options">
-                    <div class="radio-group">
-                        <label><input type="radio" name="q6" value="0" required> 0</label>
-                        <label><input type="radio" name="q6" value="1"> 1</label>
-                        <label><input type="radio" name="q6" value="2"> 2</label>
+                        <label><input type="radio" name="q3" value="0" required> <strong>0 - Inicial (A1/A2)</strong><br>Modelo reproductivo/expositivo; sin herramientas colaborativas.</label>
+                        <label><input type="radio" name="q3" value="1"> <strong>1 - Intermedio (B1/B2)</strong><br>Metodología colaborativa (wikis); pautas éticas para uso de IA.</label>
+                        <label><input type="radio" name="q3" value="2"> <strong>2 - Avanzado (C1/C2)</strong><br>Análisis crítico de sesgos algorítmicos; delegación metacognitiva a IA.</label>
                     </div>
                 </td>
             </tr>
         </table>
 
-        <!-- DIMENSIÓN EVALUATIVA Y RETROALIMENTACIÓN -->
-        <div class="section-title">IV. Dimensión Evaluativa y Retroalimentación</div>
+        <div class="section-title">
+            <span>IV. Evaluación, Analíticas y Retroalimentación</span>
+            <span>Área 4 DigCompEdu</span>
+        </div>
         <table>
             <tr>
-                <th>Criterio a Evaluar</th>
-                <th>Valoración (0 = No, 1 = Parcial, 2 = Sí)</th>
+                <th>Indicadores Técnicos de Cumplimiento (LMS)</th>
+                <th>Desempeño Observado (Niveles A, B, C)</th>
             </tr>
             <tr>
-                <td>7. ¿Se explicita anticipadamente la modalidad, recursos y criterios de evaluación a los estudiantes?</td>
+                <td>Uso de rúbricas nativas, feedback formativo y analíticas de aprendizaje.</td>
                 <td class="td-options">
                     <div class="radio-group">
-                        <label><input type="radio" name="q7" value="0" required> 0</label>
-                        <label><input type="radio" name="q7" value="1"> 1</label>
-                        <label><input type="radio" name="q7" value="2"> 2</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>8. ¿Se utiliza el entorno (tareas, cuestionarios, wikis) para brindar feedback formativo, continuo y personalizado?</td>
-                <td class="td-options">
-                    <div class="radio-group">
-                        <label><input type="radio" name="q8" value="0" required> 0</label>
-                        <label><input type="radio" name="q8" value="1"> 1</label>
-                        <label><input type="radio" name="q8" value="2"> 2</label>
+                        <label><input type="radio" name="q4" value="0" required> <strong>0 - Inicial (A1/A2)</strong><br>Tests automáticos memorísticos; nota numérica sin feedback.</label>
+                        <label><input type="radio" name="q4" value="1"> <strong>1 - Intermedio (B1/B2)</strong><br>Rúbricas en LMS; análisis periódico de logs de estudiantes.</label>
+                        <label><input type="radio" name="q4" value="2"> <strong>2 - Avanzado (C1/C2)</strong><br>Sistemas adaptativos; analítica predictiva para autorregulación.</label>
                     </div>
                 </td>
             </tr>
         </table>
 
-        <!-- RECURSOS DIGITALES Y ALFIN -->
-        <div class="section-title">V. Gestión de Recursos y Derechos Digitales</div>
+        <div class="section-title">
+            <span>V. Inclusión, Accesibilidad y DUA</span>
+            <span>Área 5 DigCompEdu</span>
+        </div>
         <table>
             <tr>
-                <th>Criterio a Evaluar</th>
-                <th>Valoración (0 = No, 1 = Parcial, 2 = Sí)</th>
+                <th>Indicadores Técnicos de Cumplimiento (LMS)</th>
+                <th>Desempeño Observado (Niveles A, B, C)</th>
             </tr>
             <tr>
-                <td>9. ¿Se integra bibliografía digital y recursos multimodales respetando los derechos de autor (licencias abiertas / correcta atribución)?</td>
+                <td>Cumplimiento de Diseño Universal para el Aprendizaje y personalización.</td>
                 <td class="td-options">
                     <div class="radio-group">
-                        <label><input type="radio" name="q9" value="0" required> 0</label>
-                        <label><input type="radio" name="q9" value="1"> 1</label>
-                        <label><input type="radio" name="q9" value="2"> 2</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>10. ¿El diseño de las actividades promueve la Alfabetización Informacional (ALFIN) y la creación de contenidos por parte del estudiante?</td>
-                <td class="td-options">
-                    <div class="radio-group">
-                        <label><input type="radio" name="q10" value="0" required> 0</label>
-                        <label><input type="radio" name="q10" value="1"> 1</label>
-                        <label><input type="radio" name="q10" value="2"> 2</label>
+                        <label><input type="radio" name="q5" value="0" required> <strong>0 - Inicial (A1/A2)</strong><br>Formato único lineal; sin opciones de accesibilidad visual/auditiva.</label>
+                        <label><input type="radio" name="q5" value="1"> <strong>1 - Intermedio (B1/B2)</strong><br>Descripciones alternativas (ALT); tareas opcionales de nivelación.</label>
+                        <label><input type="radio" name="q5" value="2"> <strong>2 - Avanzado (C1/C2)</strong><br>Trayectorias adaptables y co-diseño de actividades inclusivas.</label>
                     </div>
                 </td>
             </tr>
         </table>
 
         <div class="actions">
-            <button type="button" onclick="calcularScore()">Finalizar Auditoría</button>
-            <button type="button" class="btn-print" onclick="window.print()">Guardar como PDF / Imprimir</button>
+            <button type="button" onclick="calcularScore()">Ejecutar Algoritmo de Triangulación</button>
+            <button type="button" class="btn-print" onclick="window.print()">Exportar Informe Oficial</button>
         </div>
     </form>
 
@@ -328,31 +332,16 @@
 </div>
 
 <script>
-    // Base de datos de materias según el plan de estudios
     const materiasPorCarrera = {
         "abogacia": [
             "--- PRIMER AÑO ---",
-            "Introducción a la Filosofía", "Problemática del Conocimiento", "Introducción al Derecho", "Derecho Romano", "Historia de las Instituciones Arg. y Lat.", "Derecho Político", "Derecho Civil", "Inglés I",
-            "--- SEGUNDO AÑO ---",
-            "Derecho Penal Parte General I", "Derecho Constitucional", "Principios de la Economía", "Derecho de las Obligaciones I", "Inglés II", "Práctica Profesional Supervisada I", "Derecho Penal Parte General II", "Finanzas Públicas y Derecho Tributario", "Derecho de las Obligaciones II", "Derecho del Consumidor", "Inglés III", "Práctica Profesional Supervisada II",
-            "--- TERCER AÑO ---",
-            "Derecho Penal Parte Especial I", "Derecho Comercial y Societario I", "Contratos Civiles y Comerciales I", "Sociología del Derecho", "Práctica Profesional Supervisada III", "Derecho Penal Parte Especial II", "Derecho Comercial y Societario II", "Contratos Civiles y Comerciales II", "Filosofía del Derecho", "Mediación I", "Práctica Profesional Supervisada IV",
-            "--- CUARTO AÑO ---",
-            "Derechos Reales I", "Títulos Valores", "Derecho del Trabajo y la Seguridad Social", "Derecho Procesal Civil y Comercial. Parte General", "Mediación II", "Práctica Profesional Supervisada V", "Derechos Reales II", "Derecho Procesal Civil y Comercial. Parte Especial", "Derecho Concursal", "Derecho de las Familias", "Derechos Humanos", "Metodología de la Investigación I", "Práctica Profesional Supervisada VI",
-            "--- QUINTO AÑO ---",
-            "Derecho Sucesorio", "Derecho Administrativo I", "Derecho Procesal Penal I", "Derecho Internacional Público y de la Integración", "Mediación III", "Práctica Profesional Supervisada VII", "Derecho Administrativo II", "Derecho Procesal Penal II", "Derecho de los Recursos Naturales y Medio Ambiente", "Derecho Internacional Privado", "Metodología de la Investigación II", "Práctica Profesional Supervisada VIII",
-            "--- OPTATIVAS ---",
-            "Derecho Público Provincial y Municipal", "Derecho Electoral", "Derecho Penal Económico", "Criminología", "Derecho del Transporte", "Derecho Informático", "Análisis Económico del Derecho", "Empresa Familiar", "Integración Regional", "(Otras optativas...)"
+            "Introducción a la Filosofía", "Problemática del Conocimiento", "Introducción al Derecho", "Derecho Romano",
+            "--- QUINTO AÑO / PRÁCTICAS ---",
+            "Derecho de las Familias", "Derecho Internacional Público", "Práctica Profesional Supervisada VII", "Práctica Profesional Supervisada VIII"
         ],
         "tecnicatura": [
-            "--- PRIMER AÑO - 1° Semestre ---",
-            "Introducción a la Comunicación", "Ëtica Profesional", "Inglés I", "Manejo de Utilitarios PC", "Introducciones Contables I", "Fundamentos del Derecho I", "Higiene y Seguridad", "Práctica Profesional I",
-            "--- PRIMER AÑO - 2° Semestre ---",
-            "Problemática de la Comunicación", "Psicología Social", "Inglés II", "Introducciones Contables II", "Fundamentos del Derecho II", "Estructura Edilicia", "Práctica Profesional II",
-            "--- SEGUNDO AÑO - 1° Semestre ---",
-            "Mediación, Negociación y Res. Conflictos", "Comercio vinculado a la Admin. Edilicia", "Liquidación de Sueldos y Seg. Social", "Obligaciones, Familia y Sucesiones", "Derechos Reales y Registral", "Propiedad Horizontal", "Comportamiento organizacional", "Práctica Profesional III",
-            "--- SEGUNDO AÑO - 2° Semestre ---",
-            "Rendición de Cuentas y Régimen Impositivo", "Ordenamiento territorial e Ingeniería", "Diseño y Proyectos Inmobiliarios", "Contratos", "Derecho Laboral", "Conjuntos Inmobiliarios", "Práctica Profesional IV", "Proyecto Final"
+            "--- TECNICATURA ---",
+            "Introducción a la Comunicación", "Fundamentos del Derecho I", "Manejo de Utilitarios PC", "Mediación, Negociación y Res. Conflictos"
         ]
     };
 
@@ -361,19 +350,17 @@
         const materiaSelect = document.getElementById("materia");
         const carreraSeleccionada = carreraSelect.value;
 
-        // Limpiar opciones anteriores
-        materiaSelect.innerHTML = '<option value="">-- Seleccione una Materia --</option>';
+        materiaSelect.innerHTML = '<option value="">-- Seleccione el Entorno --</option>';
 
         if (carreraSeleccionada !== "") {
             const materias = materiasPorCarrera[carreraSeleccionada];
             materias.forEach(materia => {
                 const option = document.createElement("option");
-                // Si la línea es un separador, deshabilitarla
                 if(materia.startsWith("---")) {
                     option.text = materia;
                     option.disabled = true;
                     option.style.fontWeight = "bold";
-                    option.style.backgroundColor = "#ecf0f1";
+                    option.style.backgroundColor = "#edf2f7";
                 } else {
                     option.value = materia;
                     option.text = materia;
@@ -392,9 +379,9 @@
         }
 
         let puntajeTotal = 0;
-        const maxPuntaje = 20; // 10 preguntas x 2 puntos máximo
+        const maxPuntaje = 10; // 5 preguntas x 2 puntos máximo
         
-        for(let i = 1; i <= 10; i++) {
+        for(let i = 1; i <= 5; i++) {
             let opciones = form.elements['q' + i];
             for (let radio of opciones) {
                 if (radio.checked) {
@@ -408,17 +395,32 @@
         divResultado.style.display = 'block';
         
         let materia = document.getElementById('materia').value;
-        let mensaje = `<strong>Materia Evaluada:</strong> ${materia}<br><strong>Puntuación Total:</strong> ${puntajeTotal} / ${maxPuntaje} (${porcentaje}%)<br><br>`;
+        let telemetria = document.getElementById('telemetria').checked ? 
+                         "<span style='color:#319795;'>Sí (Datos respaldados por LMS)</span>" : 
+                         "<span style='color:#e53e3e;'>No (Sesgo de autopercepción posible)</span>";
 
-        if(porcentaje >= 85) {
+        let mensaje = `
+            <h3 style="margin-top:0; color:var(--primary-color);">Resultados del Motor de Triangulación</h3>
+            <strong>Entorno Analizado:</strong> ${materia}<br>
+            <strong>Estado de Telemetría:</strong> ${telemetria}<br>
+            <strong>Puntuación DigCompEdu:</strong> ${puntajeTotal} / ${maxPuntaje} (${porcentaje}%)<br><br>
+        `;
+
+        if(porcentaje >= 80) {
             divResultado.className = 'results-card score-high';
-            divResultado.innerHTML = mensaje + '✅ <strong>Nivel Óptimo.</strong> El aula virtual cumple cabalmente con las normativas del SIED y exhibe una mediación tecno-pedagógica excelente.';
-        } else if(porcentaje >= 60) {
+            divResultado.innerHTML = mensaje + `
+                ✅ <strong>Nivel de Madurez: Avanzado (C1/C2 - Pionero).</strong><br>
+                El entorno demuestra una excelencia técnica y pedagógica. <strong>Acción Sugerida:</strong> El docente está habilitado para la <em>Vía C de Acreditación</em>. Se recomienda iniciar la estructuración del portafolio digital de evidencias (e.g., mediante eXeLearning) para validar las prácticas de innovación y su impacto institucional.`;
+        } else if(porcentaje >= 40) {
             divResultado.className = 'results-card score-mid';
-            divResultado.innerHTML = mensaje + '⚠️ <strong>Nivel Aceptable (En Proceso).</strong> El aula integra herramientas digitales, pero requiere ajustes para superar el modelo de "repositorio" o mejorar la retroalimentación y tutoría.';
+            divResultado.innerHTML = mensaje + `
+                ⚠️ <strong>Nivel de Madurez: Intermedio (B1/B2 - Integrador).</strong><br>
+                El aula supera el formato de repositorio, pero requiere fortalecer la analítica de aprendizaje o la integración crítica de la IA. <strong>Acción Sugerida:</strong> Se prescribe la asignación de itinerarios de microaprendizaje enfocados en evaluación formativa automatizada y diseño de rúbricas electrónicas en el entorno de aprendizaje.`;
         } else {
             divResultado.className = 'results-card score-low';
-            divResultado.innerHTML = mensaje + '❌ <strong>Nivel Crítico.</strong> El aula no cumple con los lineamientos mínimos de mediación didáctica. Es prioritaria una intervención de diseño instruccional.';
+            divResultado.innerHTML = mensaje + `
+                ❌ <strong>Nivel de Madurez: Inicial (A1/A2 - Explorador).</strong><br>
+                El entorno presenta riesgos de exclusión didáctica, reduccionismo instrumental y carece de andamiaje interactivo. <strong>Acción Sugerida:</strong> Urge un proceso de rediseño instruccional sistémico. Se recomienda la <em>Vía A de Acreditación</em> (formación guiada) orientada al Diseño Universal para el Aprendizaje (DUA) y gestión básica de recursos.`;
         }
     }
 </script>
